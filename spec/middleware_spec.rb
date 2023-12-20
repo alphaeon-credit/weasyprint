@@ -16,22 +16,22 @@ def mock_app(options = {}, conditions = {}, custom_headers = {})
 end
 
 describe WeasyPrint::Middleware do
-  let(:headers) { {'Content-Type' => "text/html"} }
+  let(:headers) { {'content-type' => "text/html"} }
 
   describe "#call" do
     describe "caching" do
-      let(:headers) { {'Content-Type' => "text/html", 'ETag' => 'foo', 'Cache-Control' => 'max-age=2592000, public'} }
+      let(:headers) { {'content-type' => "text/html", 'etag' => 'foo', 'cache-control' => 'max-age=2592000, public'} }
 
       context "by default" do
         before { mock_app }
 
         it "deletes ETag" do
           get 'http://www.example.org/public/test.pdf'
-          expect(last_response.headers["ETag"]).to be_nil
+          expect(last_response.headers["etag"]).to be_nil
         end
-        it "deletes Cache-Control" do
+        it "deletes cache-control" do
           get 'http://www.example.org/public/test.pdf'
-          expect(last_response.headers["Cache-Control"]).to be_nil
+          expect(last_response.headers["cache-control"]).to be_nil
         end
       end
 
@@ -40,11 +40,11 @@ describe WeasyPrint::Middleware do
 
         it "preserves ETag" do
           get 'http://www.example.org/public/test.pdf'
-          expect(last_response.headers["ETag"]).not_to be_nil
+          expect(last_response.headers["etag"]).not_to be_nil
         end
-        it "preserves Cache-Control" do
+        it "preserves cache-control" do
           get 'http://www.example.org/public/test.pdf'
-          expect(last_response.headers["Cache-Control"]).not_to be_nil
+          expect(last_response.headers["cache-control"]).not_to be_nil
         end
       end
     end
@@ -59,7 +59,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -67,7 +67,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -79,7 +79,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -87,7 +87,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -101,7 +101,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -109,7 +109,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -121,7 +121,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -129,7 +129,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -147,7 +147,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -155,7 +155,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -167,7 +167,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -175,7 +175,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -189,7 +189,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -197,7 +197,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -209,7 +209,7 @@ describe WeasyPrint::Middleware do
             context "matching" do
               specify do
                 get 'http://www.example.org/public/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("application/pdf")
+                expect(last_response.headers["content-type"]).to eq("application/pdf")
                 expect(last_response.body.bytesize).to eq(WeasyPrint.new("Hello world!").to_pdf.bytesize)
               end
             end
@@ -217,7 +217,7 @@ describe WeasyPrint::Middleware do
             context "not matching" do
               specify do
                 get 'http://www.example.org/secret/test.pdf'
-                expect(last_response.headers["Content-Type"]).to eq("text/html")
+                expect(last_response.headers["content-type"]).to eq("text/html")
                 expect(last_response.body).to eq("Hello world!")
               end
             end
@@ -229,8 +229,8 @@ describe WeasyPrint::Middleware do
       describe "saving generated pdf to disk" do
 	before do
           #make sure tests don't find an old test_save.pdf
-          File.delete('spec/test_save.pdf') if File.exists?('spec/test_save.pdf')
-          expect(File.exists?('spec/test_save.pdf')).to be_false
+          File.delete('spec/test_save.pdf') if File.exist?('spec/test_save.pdf')
+          expect(File.exist?('spec/test_save.pdf')).to be false
 	end
 
         context "when header WeasyPrint-save-pdf is present" do
@@ -238,7 +238,7 @@ describe WeasyPrint::Middleware do
 	    headers = { 'WeasyPrint-save-pdf' => 'spec/test_save.pdf' }
             mock_app({}, {only: '/public'}, headers)
 	    get 'http://www.example.org/public/test_save.pdf'
-            expect(File.exists?('spec/test_save.pdf')).to be_true
+            expect(File.exist?('spec/test_save.pdf')).to be true
 	  end
 
           it "should not raise when target directory does not exist" do
@@ -254,7 +254,7 @@ describe WeasyPrint::Middleware do
           it "should not saved the .pdf to disk" do
             mock_app({}, {only: '/public'}, {} )
 	    get 'http://www.example.org/public/test_save.pdf'
-            expect(File.exists?('spec/test_save.pdf')).to be_false
+            expect(File.exist?('spec/test_save.pdf')).to be false
           end
         end
       end
@@ -284,7 +284,7 @@ describe WeasyPrint::Middleware do
           main_app = lambda { |env|
             @env = env
             @env['SCRIPT_NAME'] = '/example.org'
-            headers = {'Content-Type' => "text/html"}
+            headers = {'content-type' => "text/html"}
             [200, headers, @body || ['Hello world!']]
           }
 
@@ -366,19 +366,19 @@ describe WeasyPrint::Middleware do
   it "should not get stuck rendering each request as pdf" do
     mock_app
     # false by default. No requests.
-    expect(@app.send(:rendering_pdf?)).to be_false
+    expect(@app.send(:rendering_pdf?)).to be nil
 
     # Remain false on a normal request
     get 'http://www.example.org/public/file'
-    expect(@app.send(:rendering_pdf?)).to be_false
+    expect(@app.send(:rendering_pdf?)).to be false
 
     # Return true on a pdf request.
     get 'http://www.example.org/public/file.pdf'
-    expect(@app.send(:rendering_pdf?)).to be_true
+    expect(@app.send(:rendering_pdf?)).to be true
 
     # Restore to false on any non-pdf request.
     get 'http://www.example.org/public/file'
-    expect(@app.send(:rendering_pdf?)).to be_false
+    expect(@app.send(:rendering_pdf?)).to be false
   end
 
 end

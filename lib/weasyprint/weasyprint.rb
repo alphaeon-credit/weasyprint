@@ -1,4 +1,5 @@
 require 'shellwords'
+require 'byebug'
 
 class WeasyPrint
 
@@ -57,7 +58,7 @@ class WeasyPrint
 
   def to_pdf(path=nil)
     append_stylesheets
-
+    byebug
     invoke = command(path)
 
     result = IO.popen(invoke, "wb+") do |pdf|
@@ -67,6 +68,13 @@ class WeasyPrint
     end
     result = File.read(path) if path
 
+    byebug
+    begin
+      result.to_s.strip.empty?
+    rescue Exception => e
+      byebug
+      puts result
+    end
     # $? is thread safe per http://stackoverflow.com/questions/2164887/thread-safe-external-process-in-ruby-plus-checking-exitstatus
     raise "command failed (exitstatus=#{$?.exitstatus}): #{invoke}" if result.to_s.strip.empty? or !successful?($?)
     return result

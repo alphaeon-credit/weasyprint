@@ -20,10 +20,12 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # Developmnet Dependencies
-  s.add_development_dependency(%q<activesupport>, [">= 5.0.0"])
-  s.add_development_dependency(%q<mocha>, [">= 0.9.10"])
-  s.add_development_dependency(%q<rack-test>, [">= 0.5.6"])
-  s.add_development_dependency(%q<rake>, ["~>0.9.2"])
-  s.add_development_dependency(%q<rdoc>, ["~> 4.0.1"])
-  s.add_development_dependency(%q<rspec>, ["~> 2.14.0"])
+  s.add_development_dependency(%q<activesupport>, [">= 7.1.2"])
+  s.add_development_dependency(%q<mocha>, [">= 2.1.0"])
+  s.add_development_dependency(%q<rack-test>, [">= 2.1.0"])
+  s.add_development_dependency(%q<rake>, ["~>13.1.0"])
+  s.add_development_dependency(%q<rdoc>, ["~> 6.6.2"])
+  s.add_development_dependency(%q<rspec>, ["~> 3.12.0"])
+
+  s.add_development_dependency(%q<byebug>, ["~> 11.1.3"])
 end
